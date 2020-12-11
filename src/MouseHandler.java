@@ -79,12 +79,36 @@ public class MouseHandler extends MouseAdapter {
     public void mouseDragged(MouseEvent e){
         try {
             if (!k.keysDown[0] && !k.keysDown[1]) {
-                if(!k.getProgramStarted()) {
+                if(!KeyHandler.getProgramStarted()) {
                     x = e.getX();
                     y = e.getY();
                     clickCoord = turnClickLocationToCoordinate(x, y);
-                    if(p.getActivated()){
-                        if(!inLimit(30, 720, 30 + 250, 720 + 150, x, y)){
+                    if (inLimit(0, 0, Pathfinder.rlWidth, Pathfinder.rlHeight, x, y)){
+                        if (p.getActivated()) {
+                            if (!inLimit(30, 720, 30 + 250, 720 + 150, x, y)) {
+                                if (SwingUtilities.isLeftMouseButton(e)) {
+                                    if (d.getNodeFromList(clickCoord[0], clickCoord[1]).getNodeType().equals(Node.NODETYPE.NORMAL)) {
+                                        d.replaceNode(new Wall(clickCoord[0], clickCoord[1]));
+                                    }
+                                } else if (SwingUtilities.isRightMouseButton(e)) {
+                                    if (d.getNodeFromList(clickCoord[0], clickCoord[1]).getNodeType().equals(Node.NODETYPE.WALL)) {
+                                        d.replaceNode(new Normal(clickCoord[0], clickCoord[1]));
+                                    } else if (d.getNodeFromList(clickCoord[0], clickCoord[1]).getNodeType().equals(Node.NODETYPE.START)) {
+                                        int reply = JOptionPane.showConfirmDialog(null, "Are you sure you would like to delete your start?", "Warning",
+                                                JOptionPane.YES_NO_OPTION);
+                                        if (reply == JOptionPane.YES_OPTION) {
+                                            d.replaceNode(new Normal(clickCoord[0], clickCoord[1]));
+                                        }
+                                    } else if (d.getNodeFromList(clickCoord[0], clickCoord[1]).getNodeType().equals(Node.NODETYPE.GOAL)) {
+                                        int reply = JOptionPane.showConfirmDialog(null, "Are you sure you would like to delete your goal?", "Warning",
+                                                JOptionPane.YES_NO_OPTION);
+                                        if (reply == JOptionPane.YES_OPTION) {
+                                            d.replaceNode(new Normal(clickCoord[0], clickCoord[1]));
+                                        }
+                                    }
+                                }
+                            }
+                        } else {
                             if (SwingUtilities.isLeftMouseButton(e)) {
                                 if (d.getNodeFromList(clickCoord[0], clickCoord[1]).getNodeType().equals(Node.NODETYPE.NORMAL)) {
                                     d.replaceNode(new Wall(clickCoord[0], clickCoord[1]));
@@ -104,28 +128,6 @@ public class MouseHandler extends MouseAdapter {
                                     if (reply == JOptionPane.YES_OPTION) {
                                         d.replaceNode(new Normal(clickCoord[0], clickCoord[1]));
                                     }
-                                }
-                            }
-                        }
-                    }else{
-                        if (SwingUtilities.isLeftMouseButton(e)) {
-                            if (d.getNodeFromList(clickCoord[0], clickCoord[1]).getNodeType().equals(Node.NODETYPE.NORMAL)) {
-                                d.replaceNode(new Wall(clickCoord[0], clickCoord[1]));
-                            }
-                        } else if (SwingUtilities.isRightMouseButton(e)) {
-                            if (d.getNodeFromList(clickCoord[0], clickCoord[1]).getNodeType().equals(Node.NODETYPE.WALL)) {
-                                d.replaceNode(new Normal(clickCoord[0], clickCoord[1]));
-                            } else if (d.getNodeFromList(clickCoord[0], clickCoord[1]).getNodeType().equals(Node.NODETYPE.START)) {
-                                int reply = JOptionPane.showConfirmDialog(null, "Are you sure you would like to delete your start?", "Warning",
-                                        JOptionPane.YES_NO_OPTION);
-                                if (reply == JOptionPane.YES_OPTION) {
-                                    d.replaceNode(new Normal(clickCoord[0], clickCoord[1]));
-                                }
-                            } else if (d.getNodeFromList(clickCoord[0], clickCoord[1]).getNodeType().equals(Node.NODETYPE.GOAL)) {
-                                int reply = JOptionPane.showConfirmDialog(null, "Are you sure you would like to delete your goal?", "Warning",
-                                        JOptionPane.YES_NO_OPTION);
-                                if (reply == JOptionPane.YES_OPTION) {
-                                    d.replaceNode(new Normal(clickCoord[0], clickCoord[1]));
                                 }
                             }
                         }
