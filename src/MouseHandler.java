@@ -15,16 +15,32 @@ public class MouseHandler extends MouseAdapter {
     int x, y;
     int[] clickCoord = new int[2];
 
+    /**
+     * Constructor
+     * @param d DrawNodes object used
+     * @see DrawNodes
+     * @param k KeyHandler object used
+     * @see KeyHandler
+     * @param p Panel object used
+     * @see Panel
+     */
     public MouseHandler(DrawNodes d, KeyHandler k, Panel p){
         this.d = d;
         this.k = k;
         this.p = p;
     }
 
+    /**
+     * Test method
+     */
     public void tick(){
 
     }
 
+    /**
+     * Does stuff based on the mouse's release
+     * @param e Information about the mouse when it is realsed
+     */
     @Override
     public void mouseReleased(MouseEvent e){
         x = e.getX();
@@ -75,6 +91,10 @@ public class MouseHandler extends MouseAdapter {
         }
     }
 
+    /**
+     * Does certain stuff based on the mouse being dragged
+     * @param e Information about the mouse while dragging
+     */
     @Override
     public void mouseDragged(MouseEvent e){
         try {
@@ -137,6 +157,12 @@ public class MouseHandler extends MouseAdapter {
         }catch(NullPointerException ignored){}
     }
 
+    /**
+     * Turns a click into a readable coordinate (int array)
+     * @param x X coordinate of the click
+     * @param y Y coordinate of the click
+     * @return An array readable by the code regarding the location of the click
+     */
     public int[] turnClickLocationToCoordinate(int x, int y){
         int zoom = d.getZoom();
         int[] scale = d.scaling();
@@ -149,6 +175,16 @@ public class MouseHandler extends MouseAdapter {
         return new int[]{nodeX, nodeY};
     }
 
+    /**
+     * A method used to see if a click is within a specific set of parameters
+     * @param minX X Negative limit
+     * @param minY Y Negative limit
+     * @param maxX X Positive Limit
+     * @param maxY Y Positive Limit
+     * @param x X value of click
+     * @param y Y value of click
+     * @return If the clock is within the limitations
+     */
     public boolean inLimit(int minX, int minY, int maxX, int maxY, int x, int y){
         if(x > minX && x < maxX){
             return y > minY && y < maxY;

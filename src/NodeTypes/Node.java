@@ -24,7 +24,7 @@ public abstract class Node{
         NORMAL,
         START,
         GOAL,
-        WALL;
+        WALL
     }
 
     /**
@@ -99,15 +99,28 @@ public abstract class Node{
      */
     public abstract void setFinalScore(double n);
 
-
+    /**
+     * Sets the color of the Node to c
+     * @param c The new color of the Node
+     */
     public abstract void setColor(Color c);
 
-
+    /**
+     * Gets the current color of the Node
+     * @return The Node's color
+     */
     public abstract Color getColor();
 
-
+    /**
+     * Sets the parant of the Node
+     * @param n The Node that is to be the parent of the current Node
+     */
     public abstract void setParent(Node n);
 
+    /**
+     * Gets the parent of the current Node
+     * @return The parent of the current Node
+     */
     public abstract Node getParent();
 
 }

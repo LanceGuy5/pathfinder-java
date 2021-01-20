@@ -14,16 +14,37 @@ import java.time.Clock;
 
 public class DijkstraSearch implements Runnable{
 
+    /**
+     * DrawNodes object used in the program
+     */
     DrawNodes d;
+
+    /**
+     * KeyHandler to be used in the program
+     */
     KeyHandler k;
 
+    /**
+     * List of final path of Nodes
+     */
     public LinkedList<Node> finalPath = new LinkedList<>();
 
+    /**
+     * Constructor
+     * @param d DrawNodes object
+     * @see DrawNodes
+     * @param k KeyHandler object
+     * @see KeyHandler
+     */
     public DijkstraSearch(DrawNodes d, KeyHandler k){
         this.d = d;
         this.k = k;
     }
 
+    /**
+     * Run method - made as a new thread.
+     * Used for timing and data analysis of the program.
+     */
     @Override
     public void run(){
         if(d.hasStart() && d.hasGoal()){
@@ -46,15 +67,20 @@ public class DijkstraSearch implements Runnable{
                 }
             }
         }else{
-            //TODO state that there needs to be a start and a goal
+            // TODO state that there needs to be a start and a goal
         }
     }
 
     /*********      ALGORITHMS     **************/
 
+    /**
+     * Main algorithm - Dijkstra Search
+     * @param start The starting Node
+     * @param goal The goal Node
+     */
     public void algorithm(Node start, Node goal){
         List<Node> open = new ArrayList<>();
-        List<Node> closed = new ArrayList<Node>();
+        List<Node> closed = new ArrayList<>();
         open.add(start);
         while(true){
             try {
@@ -114,6 +140,11 @@ public class DijkstraSearch implements Runnable{
         Panel.setPathLength(finalPath.size());
     }
 
+    /**
+     * A method that searches for the final path.
+     * Uses parent Nodes to trace the path back from the final Node to the starting Node
+     * @param n The Node being searched
+     */
     public void search(Node n){
         if(!n.getParent().getNodeType().equals(Node.NODETYPE.START)) {
             finalPath.add(n.getParent());
@@ -124,6 +155,11 @@ public class DijkstraSearch implements Runnable{
 
     /*********      UTILITIES     **************/
 
+    /**
+     * Calculates all Nodes surrounding the target Node
+     * @param n Node being searched
+     * @return A LinkedList of the surrounding Nodes
+     */
     public LinkedList<Node> calcCloseNodes(Node n){
         LinkedList<Node> closeNodes = new LinkedList<>();
         if(d.getNodeFromList(n.getPosX() - 1, n.getPosY()) != null) {
@@ -161,6 +197,12 @@ public class DijkstraSearch implements Runnable{
         return closeNodes;
     }
 
+    /**
+     * Method to get the algorithmic distance between Nodes
+     * @param a The first Node
+     * @param b The second Node
+     * @return The distance between Nodes a and b
+     */
     public double getDistance(Node a, Node b){
         int distanceX = Math.abs(a.getPosX() - b.getPosX());
         int distanceY = Math.abs(a.getPosY() - b.getPosY());
@@ -171,6 +213,12 @@ public class DijkstraSearch implements Runnable{
         }
     }
 
+    /**
+     * Calculates the score algorithmically of a Node (n1) based off of another Node (n2)
+     * @param n1 Node one
+     * @param n2 Node two
+     * @return The score of Node one
+     */
     public double calculateScores(Node n1, Node n2){
         int add;
         if(n1.getPosX() == n2.getPosX() || n1.getPosY() == n2.getPosY()){
@@ -181,6 +229,12 @@ public class DijkstraSearch implements Runnable{
         return add;
     }
 
+    /**
+     * Checks if a Node's corners are blocked
+     * @param s1 The one of the sides touching the corner
+     * @param s2 The other side touching the corner
+     * @return If the sides touching the corner are both not walls
+     */
     public boolean checkCorner(Node s1, Node s2) {
         if(s1 == null || s2 == null) return false;
         return !(s1.getNodeType().equals(Node.NODETYPE.WALL) && s2.getNodeType().equals(Node.NODETYPE.WALL));

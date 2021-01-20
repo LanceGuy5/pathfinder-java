@@ -19,7 +19,7 @@ public class DrawNodes extends MouseAdapter{
     public LinkedList<Node> Nodes;
     private int[][] coordinate;
 
-    int nodeZoom = 4;
+    int nodeZoom = 8;
     private static int minZoom;
     int numOfNodes = 8; //DEFAULT NUM OF NODES
     private static final int MAX_ZOOM = 100;
@@ -113,7 +113,7 @@ public class DrawNodes extends MouseAdapter{
      * @return An integer array of all available zoom configurations
      */
     public int[] scaling(){
-        LinkedList<Integer> l = new LinkedList<Integer>();
+        LinkedList<Integer> l = new LinkedList<>();
         for(int i = 1; i < MAX_ZOOM; i++) {
             if (Pathfinder.rlWidth % i == 0 && Pathfinder.rlHeight % i == 0) {
                 l.add(i);

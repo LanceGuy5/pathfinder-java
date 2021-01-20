@@ -10,6 +10,13 @@ public class KeyHandler extends KeyAdapter {
 
     static boolean programStarted = false;
 
+    /**
+     * Cosntructor
+     * @param d DrawNodes object
+     * @see DrawNodes
+     * @param p Panel object
+     * @see Panel
+     */
     public KeyHandler(DrawNodes d, Panel p){
         this.d = d;
         this.p = p;
@@ -64,10 +71,18 @@ public class KeyHandler extends KeyAdapter {
         }
     }
 
+    /**
+     * Checks if the program has been started
+     * @return If the program has been started
+     */
     public static boolean getProgramStarted(){
         return programStarted;
     }
 
+    /**
+     * Sets if the program has been started
+     * @param started boolean value if the program should be started or not
+     */
     public static void setProgramStarted(boolean started){
         programStarted = started;
     }

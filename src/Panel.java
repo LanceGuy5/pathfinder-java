@@ -26,6 +26,10 @@ public class Panel extends MouseAdapter {
         this.d = d;
     }
 
+    /**
+     * Checks if mouse has been released
+     * @param e MouseEvent checking status of the click
+     */
     @Override
     public void mouseReleased(MouseEvent e){
         if(activated){
@@ -37,12 +41,19 @@ public class Panel extends MouseAdapter {
         }
     }
 
+    /**
+     * Tick method for the Panel
+     */
     public void tick(){
         if(activated){
             running = KeyHandler.getProgramStarted();
         }
     }
 
+    /**
+     * Render method for the Panel
+     * @param g Graphics object being rendered
+     */
     public void render(Graphics g){
         if(activated) {
             //Panel:
@@ -76,6 +87,16 @@ public class Panel extends MouseAdapter {
         }
     }
 
+    /**
+     * A method used to see if a click is within a specific set of parameters
+     * @param minX X Negative limit
+     * @param minY Y Negative limit
+     * @param maxX X Positive Limit
+     * @param maxY Y Positive Limit
+     * @param x X value of click
+     * @param y Y value of click
+     * @return If the clock is within the limitations
+     */
     public boolean clickInLimit(int minX, int minY, int maxX, int maxY, int x, int y){
         if(x > minX && x < maxX){
             return y > minY && y < maxY;
@@ -83,6 +104,9 @@ public class Panel extends MouseAdapter {
         return false;
     }
 
+    /**
+     * Resets the panel and the graph
+     */
     public void reset(){
         d.clearNodes();
         KeyHandler.setProgramStarted(false);
@@ -91,30 +115,53 @@ public class Panel extends MouseAdapter {
         pathLength = 0;
     }
 
+    /**
+     * Gets if the panel has been activated
+     * @return If the panel is activated
+     */
     public boolean getActivated(){
         return activated;
     }
 
+    /**
+     * Sets if the panel is activated
+     * @param activated If the panel should be active or not
+     */
     public void setActivated(boolean activated){
         this.activated = activated;
     }
 
+    /**
+     * @param d Sets the time stamp to d
+     */
     public static void setTimeStamp(double d){
         timeStamp = d;
     }
 
+    /**
+     * @param d Sets the time started to d
+     */
     public static void setTimeStarted(String d){
         timeStarted = d;
     }
 
+    /**
+     * @param i Sets the path length to i
+     */
     public static void setPathLength(int i){
         pathLength = i;
     }
 
+    /**
+     * @param i Sets the FPS to i
+     */
     public static void setFPS(int i){
         FPS = i;
     }
 
+    /**
+     * @param i Sets the ticks to i
+     */
     public static void setTicks(int i){
         ticks = i;
     }
